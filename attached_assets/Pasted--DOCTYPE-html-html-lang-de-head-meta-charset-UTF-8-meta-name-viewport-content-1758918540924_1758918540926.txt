@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact-Rechner - Nature Invest Paraguay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2E7D32;
+            --primary-dark: #1B5E20;
+            --primary-light: #4CAF50;
+            --primary-lighter: #81C784;
+            --accent: #FF8C00;
+            --accent-light: #FFA726;
+            --bg-dark: #0D1F0D;
+            --bg-medium: #1A331A;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0D1F0D 0%, #1A331A 50%, #0D2818 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Nature Background */
+        .nature-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+            background:
+                radial-gradient(ellipse at top left, rgba(46, 125, 50, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(76, 175, 80, 0.2) 0%, transparent 50%);
+            animation: gradientShift 15s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Section */
+        .header-section {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.95), rgba(76, 175, 80, 0.85));
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(129, 199, 132, 0.3);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+            animation: fadeInScale 0.8s ease-out 0.2s both;
+            line-height: 1.2;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #E8F5E9;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        /* Quick Stats Cards */
+        .quick-impacts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .quick-impact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quick-impact-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .quick-impact-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 15px 12px rgba(0, 0, 0, 0.22);
+        }
+
+        .quick-impact-card:hover::after {
+            opacity: 1;
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+            display: inline-block;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .impact-content .impact-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .impact-content .impact-label {
+            font-size: 0.85rem;
+            margin: 0.25rem 0 0 0;
+            opacity: 0.95;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+        }
+
+        /* Impact Calculator */
+        .impact-calculator {
+            margin-top: 2rem;
+        }
+
+        /* Calculator Section */
+        .calculator-main {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 1px solid rgba(129, 199, 132, 0.2);
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideInFromBottom 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .calculator-main h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Input Section */
+        .input-section {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            position: relative;
+        }
+
+        .input-section label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: block;
+            font-weight: 500;
+        }
+
+        #investment-input {
+            display: none;
+        }
+
+        .amount-display {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .amount-display::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4CAF50, transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-200%) translateX(-50%);
+            }
+            100% {
+                transform: translateX(200%) translateX(-50%);
+            }
+        }
+
+        .slider-container {
+            position: relative;
+            padding: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .slider-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        #investment-slider {
+            flex: 1;
+            height: 10px;
+            background: linear-gradient(90deg, #2E7D32 0%, #4CAF50 100%);
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+            position: relative;
+            cursor: pointer;
+            box-shadow:
+                inset 0 2px 4px rgba(0, 0, 0, 0.2),
+                0 1px 2px rgba(255, 255, 255, 0.1);
+        }
+
+        #investment-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow:
+                0 4px 20px rgba(46, 125, 50, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+            border: 3px solid #4CAF50;
+        }
+
+        #investment-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow:
+                0 6px 30px rgba(46, 125, 50, 0.6),
+                0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Impact Results */
+        .impact-results h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 1024px) {
+            .impact-metrics {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .impact-metrics {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(6, 1fr);
+            }
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(129, 199, 132, 0.2);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                0 10px 20px rgba(46, 125, 50, 0.2);
+        }
+
+        .metric-card.primary {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(129, 199, 132, 0.1));
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .metric-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .metric-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .metric-content {
+            padding: 1.5rem;
+            position: relative;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        }
+
+        .metric-value {
+            color: #4CAF50;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+            font-weight: 600;
+        }
+
+        .metric-detail {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 0.5rem 0 0 0;
+            font-style: italic;
+        }
+
+        /* Scenarios */
+        .scenario-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(129, 199, 132, 0.15);
+        }
+
+        .scenario-section h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .scenario::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #4CAF50, transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .scenario:hover::before {
+            transform: translateX(100%);
+        }
+
+        .scenario.highlighted {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(129, 199, 132, 0.15));
+            border-color: rgba(76, 175, 80, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+        }
+
+        .scenario:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scenario-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .scenario-rate {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.3);
+        }
+
+        .scenario-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .scenario-monthly, .scenario-yearly {
+            color: var(--text-primary);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .scenario-monthly span, .scenario-yearly span {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .scenario-note {
+            background: rgba(255, 243, 224, 0.1);
+            border: 1px solid rgba(255, 183, 77, 0.3);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        .scenario-investment {
+            color: #81C784;
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(129, 199, 132, 0.15);
+        }
+
+        .timeline-section h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #2E7D32 0%, #4CAF50 100%);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-left: 60%;
+            border: 1px solid rgba(129, 199, 132, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 0;
+            margin-right: 60%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content:hover {
+            transform: translateX(-5px);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow:
+                0 0 0 6px rgba(76, 175, 80, 0.2),
+                0 0 20px rgba(76, 175, 80, 0.5);
+            z-index: 2;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.2), rgba(76, 175, 80, 0.15));
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cta-section h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid #4CAF50;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-primary::before, .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before, .btn-secondary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Legal Notice */
+        .legal-notice {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legal-notice p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+                max-width: 100%;
+            }
+
+            .header-section {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .main-title {
+                font-size: 1.8rem;
+                line-height: 1.1;
+                margin-bottom: 0.75rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .intro-text {
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+            }
+
+            .quick-impacts {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .quick-impact-card {
+                padding: 1rem;
+                border-radius: 15px;
+                gap: 0.75rem;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .impact-icon {
+                font-size: 1.8rem;
+            }
+
+            .impact-content {
+                text-align: center;
+                width: 100%;
+            }
+
+            .impact-content .impact-number {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .impact-content .impact-label {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+
+            .calculator-main {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .calculator-main h3 {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .input-section {
+                margin-bottom: 2rem;
+            }
+
+            .input-section label {
+                font-size: 0.95rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .amount-display {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .slider-container {
+                padding: 1rem 0;
+                gap: 0.75rem;
+            }
+
+            .slider-label {
+                font-size: 0.8rem;
+            }
+
+            .impact-results h4 {
+                font-size: 1.4rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .impact-metrics {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .metric-card {
+                border-radius: 15px;
+            }
+
+            .metric-card img {
+                height: 120px;
+            }
+
+            .metric-content {
+                padding: 1rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .metric-value {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .metric-label {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+
+            .metric-detail {
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .scenario-section {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .scenario-section h4 {
+                font-size: 1.4rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .scenarios {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .scenario {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+
+            .scenario-header {
+                margin-bottom: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .scenario-label {
+                font-size: 0.95rem;
+            }
+
+            .scenario-rate {
+                padding: 0.25rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .scenario-body p {
+                font-size: 0.8rem;
+                margin: 0.4rem 0;
+            }
+
+            .scenario-monthly, .scenario-yearly {
+                padding: 0.4rem 0;
+            }
+
+            .scenario-monthly span, .scenario-yearly span {
+                font-size: 0.95rem;
+            }
+
+            .scenario-note {
+                padding: 1rem;
+                font-size: 0.75rem;
+                margin-top: 0.75rem;
+            }
+
+            .timeline-section {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .timeline-section h4 {
+                font-size: 1.4rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .timeline {
+                padding: 1.5rem 0;
+            }
+
+            .timeline::before {
+                left: 20px;
+                width: 2px;
+            }
+
+            .timeline-content {
+                margin-left: 50px !important;
+                margin-right: 0 !important;
+                padding: 0.75rem;
+                border-radius: 12px;
+            }
+
+            .timeline-marker {
+                left: 20px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-item p {
+                font-size: 0.8rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+
+            .cta-section h3 {
+                font-size: 1.8rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .cta-section p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .legal-notice {
+                margin-top: 1.5rem;
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            .legal-notice p {
+                font-size: 0.7rem;
+                line-height: 1.3;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.25rem;
+            }
+
+            .header-section {
+                padding: 1rem 0.75rem;
+                margin-bottom: 1rem;
+                border-radius: 15px;
+            }
+
+            .main-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .intro-text {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .quick-impact-card {
+                padding: 0.75rem;
+                gap: 0.5rem;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .impact-icon {
+                font-size: 1.5rem;
+            }
+
+            .impact-content {
+                text-align: center;
+                width: 100%;
+            }
+
+            .impact-content .impact-number {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .impact-content .impact-label {
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .calculator-main {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border-radius: 15px;
+            }
+
+            .calculator-main h3 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            .input-section label {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .amount-display {
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .slider-container {
+                padding: 0.75rem 0;
+                gap: 0.5rem;
+            }
+
+            .slider-label {
+                font-size: 0.7rem;
+            }
+
+            .impact-results h4 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .impact-metrics {
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .metric-card img {
+                height: 100px;
+            }
+
+            .metric-content {
+                padding: 0.75rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .metric-value {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .metric-label {
+                padding: 0.75rem;
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .metric-detail {
+                font-size: 0.7rem;
+                text-align: center;
+            }
+
+            .scenario-section {
+                padding: 1rem 0.5rem;
+                margin-bottom: 1rem;
+                border-radius: 15px;
+            }
+
+            .scenario-section h4 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .scenarios {
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .scenario {
+                padding: 0.75rem;
+                border-radius: 15px;
+            }
+
+            .scenario-label {
+                font-size: 0.9rem;
+            }
+
+            .scenario-rate {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.7rem;
+            }
+
+            .scenario-body p {
+                font-size: 0.75rem;
+                margin: 0.3rem 0;
+            }
+
+            .scenario-monthly, .scenario-yearly {
+                padding: 0.3rem 0;
+                font-size: 0.75rem;
+            }
+
+            .scenario-monthly span, .scenario-yearly span {
+                font-size: 0.85rem;
+            }
+
+            .scenario-note {
+                padding: 0.5rem;
+                font-size: 0.7rem;
+                margin-top: 0.5rem;
+            }
+
+            .timeline-section {
+                padding: 1rem 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .timeline-section h4 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .timeline {
+                padding: 1rem 0;
+            }
+
+            .timeline-content {
+                margin-left: 50px !important;
+                padding: 0.6rem;
+            }
+
+            .timeline-marker {
+                left: 15px;
+                width: 14px;
+                height: 14px;
+            }
+
+            .timeline::before {
+                left: 15px;
+            }
+
+            .timeline-content p {
+                font-size: 0.8rem;
+            }
+
+            .cta-section {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .cta-section h3 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .cta-section p {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .legal-notice {
+                margin-top: 1rem;
+                padding: 0.6rem;
+            }
+
+            .legal-notice p {
+                font-size: 0.7rem;
+                line-height: 1.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Nature Background -->
+    <div class="nature-bg"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1 class="main-title">Berechne deinen Impact für Tier, Natur und Mensch</h1>
+            <p class="subtitle">ethisch + lukrativ + inflationssicher</p>
+            <p class="intro-text">
+                Mit unserem Impact-Rechner siehst du transparent, welche positive Wirkung dein Einsatz in Bio-Liegenschaften hat.
+                Jeder Euro schützt Naturwald, bindet CO₂ und schafft faire Arbeitsplätze vor Ort.
+                Die Berechnungen basieren auf realen Projekterfahrungen.
+            </p>
+
+            <div class="quick-impacts">
+                <div class="quick-impact-card">
+                    <div class="impact-icon">🌳</div>
+                    <div class="impact-content">
+                        <p class="impact-number">2 ha</p>
+                        <p class="impact-label">Naturschutz pro<br>1 ha Anbaufläche</p>
+                    </div>
+                </div>
+                <div class="quick-impact-card">
+                    <div class="impact-icon">💼</div>
+                    <div class="impact-content">
+                        <p class="impact-number">5+</p>
+                        <p class="impact-label">Arbeitsplätze<br>pro 100.000€</p>
+                    </div>
+                </div>
+                <div class="quick-impact-card">
+                    <div class="impact-icon">🌱</div>
+                    <div class="impact-content">
+                        <p class="impact-number">100%</p>
+                        <p class="impact-label">Bio-zertifizierte<br>Produktion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Impact Calculator Container -->
+        <div id="impact-calculator" class="impact-calculator">
+            <!-- Calculator Section -->
+            <div class="calculator-main">
+                <h3>Berechne deinen persönlichen Impact</h3>
+
+                <div class="input-section">
+                    <label for="investment-input">Dein Einsatz (EUR)</label>
+                    <input type="number" id="investment-input" min="25000" max="1000000" step="5000" value="100000">
+                    <div class="amount-display">€<span id="amountDisplay">100.000</span></div>
+
+                    <div class="slider-container">
+                        <span class="slider-label">25.000€</span>
+                        <input type="range" id="investment-slider" min="25000" max="1000000" step="5000" value="100000">
+                        <span class="slider-label">1.000.000€</span>
+                    </div>
+                </div>
+
+                <!-- Impact Results -->
+                <div class="impact-results">
+                    <h4>Dein direkter Impact:</h4>
+
+                    <div class="impact-metrics">
+                        <div class="metric-card primary">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Dschungel_v1.2.jpg" alt="Naturschutz">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="protected-area">40.000</span> m²</p>
+                                <p class="metric-label">geschützter Naturwald</p>
+                                <p class="metric-detail">= <span id="protected-football">5,6</span> Fußballfelder Urwald bleiben erhalten</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card primary">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Co2_v1.3.jpg" alt="CO2">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="co2-bound">175</span> Tonnen</p>
+                                <p class="metric-label">CO₂ dauerhaft gebunden</p>
+                                <p class="metric-detail">= <span id="co2-equivalent">17</span> Jahre Autofahren kompensiert</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Oele_v1.3.jpg" alt="Bio-Produktion">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="bio-production">25.000</span> kg</p>
+                                <p class="metric-label">Bio-Zitronen pro Jahr</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Familie_v1.3.jpg" alt="Arbeitsplätze">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="jobs">5</span> Familien</p>
+                                <p class="metric-label">mit fairem Einkommen</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Vogel_v1.3.jpg" alt="Tierwohl">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="animals">500</span>+ Tiere</p>
+                                <p class="metric-label">behalten ihren Lebensraum</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <img src="https://natureinvest.com.py/wp-content/uploads/2024/07/Euro_v1.3.jpg" alt="Wertschöpfung">
+                            <div class="metric-content">
+                                <p class="metric-value"><span id="local-value">20.000</span>€</p>
+                                <p class="metric-label">jährliche lokale Wertschöpfung</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Scenarios -->
+                <div class="scenario-section">
+                    <h4>Mögliche Pachtszenarien* <span class="info-icon" title="Basierend auf Erfahrungswerten">ℹ️</span></h4>
+
+                    <div class="scenarios">
+                        <div class="scenario" data-type="conservative">
+                            <div class="scenario-header">
+                                <span class="scenario-label">Beispiel: 100.000€</span>
+                                <span class="scenario-rate">8% p.a.</span>
+                            </div>
+                            <div class="scenario-body">
+                                <p>Fixe Pacht</p>
+                                <p class="scenario-monthly">Monatlich: <span>667</span>€</p>
+                                <p class="scenario-yearly">Jährlich: <span>8.000</span>€</p>
+                            </div>
+                        </div>
+
+                        <div class="scenario highlighted" data-type="realistic">
+                            <div class="scenario-header">
+                                <span class="scenario-label">Dein Start</span>
+                                <span class="scenario-rate">8% p.a.</span>
+                            </div>
+                            <div class="scenario-body">
+                                <p class="scenario-investment"><span id="current-investment">100.000</span>€</p>
+                                <p>Fixe Pacht</p>
+                                <p class="scenario-monthly">Monatlich: <span id="realistic-monthly">667</span>€</p>
+                                <p class="scenario-yearly">Jährlich: <span id="realistic-yearly">8.000</span>€</p>
+                            </div>
+                        </div>
+
+                        <div class="scenario" data-type="optimistic">
+                            <div class="scenario-header">
+                                <span class="scenario-label">Beispiel: 1.000.000€</span>
+                                <span class="scenario-rate">8% p.a.</span>
+                            </div>
+                            <div class="scenario-body">
+                                <p>Fixe Pacht</p>
+                                <p class="scenario-monthly">Monatlich: <span>6.667</span>€</p>
+                                <p class="scenario-yearly">Jährlich: <span>80.000</span>€</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="scenario-note">
+                        *Landwirtschaftliche Erträge unterliegen natürlichen Schwankungen. Die tatsächlichen Ausschüttungen können
+                        je nach Wetterbedingungen, Marktpreisen und Ernteerfolg variieren. Diese Darstellung basiert auf
+                        Erfahrungswerten und stellt keine Garantie dar.
+                    </p>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline-section">
+                    <h4>Dein Impact über die Zeit</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <p><strong>Jahr 1:</strong> Aufbereitung & erste Pflanzungen</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <p><strong>Jahr 2-3:</strong> Erste Ernten beginnen</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <p><strong>Jahr 5:</strong> <span id="trees-5y">1.250</span> Zitrusbäume in Vollproduktion</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <p><strong>Jahr 10:</strong> <span id="total-co2-10y">1.750</span> Tonnen CO₂ gebunden</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section">
+                    <h3>Bereit für deinen Impact?</h3>
+                    <p>Lass uns gemeinsam besprechen, wie dein Einsatz Mensch & Natur unterstützen kann.</p>
+                    <div class="cta-buttons">
+                        <button class="btn-primary" onclick="window.location.href='#contact'">Persönliches Gespräch vereinbaren</button>
+                        <button class="btn-secondary" onclick="window.location.href='#webinar'">Zum Info-Webinar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Notice -->
+            <div class="legal-notice">
+                <p><strong>Wichtige Hinweise:</strong> Diese Berechnung dient der Veranschaulichung des möglichen Impacts und stellt keine Beratung zu Kapitalanlagen dar. Die angegebenen Pachtszenarien basieren auf Erfahrungswerten und sind keine garantierten Einnahmen. Landwirtschaftliche Projekte unterliegen Markt- und Wetterrisiken. Die tatsächlichen Ergebnisse können erheblich abweichen. Vor einer Entscheidung empfehlen wir ein persönliches Beratungsgespräch. Nature Invest ist keine regulierte Kapitalanlage. Weitere Details entnehmen Sie bitte unseren Verkaufsunterlagen.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utility functions
+        function formatNumber(num) {
+            return Math.round(num).toLocaleString('de-DE');
+        }
+
+        function animateValue(element, start, end, duration) {
+            const startTime = performance.now();
+            const change = end - start;
+
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = start + (change * easeOutQuart);
+
+                element.textContent = formatNumber(current);
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+
+            requestAnimationFrame(updateValue);
+        }
+
+        // Main calculation function
+        function updateCalculations(animate = false) {
+            const investment = parseFloat(document.getElementById('investment-slider').value);
+
+            // Update amount display
+            const amountDisplay = document.getElementById('amountDisplay');
+            if (animate) {
+                const currentAmount = parseFloat(amountDisplay.textContent.replace(/\./g, '')) || 100000;
+                animateValue(amountDisplay, currentAmount, investment, 800);
+            } else {
+                amountDisplay.textContent = formatNumber(investment);
+            }
+
+            // Calculate impacts
+            const protectedArea = investment * 0.4;
+            const protectedFootball = (protectedArea / 7140).toFixed(1);
+            const co2Bound = Math.round(protectedArea / 228);
+            const co2Equivalent = Math.round(co2Bound / 10);
+            const bioProduction = Math.round(investment / 4);
+            const jobs = Math.ceil(investment / 20000);
+            const animals = Math.round(protectedArea / 80);
+            const localValue = Math.round(investment * 0.2);
+            const trees5y = Math.round(investment / 80);
+            const totalCo210y = co2Bound * 10;
+
+            // Update impact values with smooth animation
+            const updates = [
+                { id: 'protected-area', value: protectedArea },
+                { id: 'protected-football', value: protectedFootball, isDecimal: true },
+                { id: 'co2-bound', value: co2Bound },
+                { id: 'co2-equivalent', value: co2Equivalent },
+                { id: 'bio-production', value: bioProduction },
+                { id: 'jobs', value: jobs },
+                { id: 'animals', value: animals },
+                { id: 'local-value', value: localValue },
+                { id: 'trees-5y', value: trees5y },
+                { id: 'total-co2-10y', value: totalCo210y }
+            ];
+
+            updates.forEach(({ id, value, isDecimal }) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (isDecimal) {
+                        element.textContent = value.toString().replace('.', ',');
+                    } else if (animate) {
+                        const currentValue = parseFloat(element.textContent.replace(/\./g, '')) || 0;
+                        animateValue(element, currentValue, value, 1200);
+                    } else {
+                        element.textContent = formatNumber(value);
+                    }
+                }
+            });
+
+            // KORRIGIERTE BERECHNUNG: Update nur das mittlere Szenario (realistic)
+            const pachtRate = 0.08; // 8% Pachtzins
+            
+            // Berechne die Pachteinnahmen basierend auf dem aktuellen Investitionsbetrag
+            const monthlyPacht = Math.ceil((investment * pachtRate) / 12);
+            const yearlyPacht = Math.ceil(investment * pachtRate);
+
+            // Update current investment display
+            const currentInvestmentElement = document.getElementById('current-investment');
+            if (currentInvestmentElement) {
+                currentInvestmentElement.textContent = formatNumber(investment);
+            }
+
+            // Update nur das mittlere Szenario (deine Investition)
+            const realisticMonthlyElement = document.getElementById('realistic-monthly');
+            const realisticYearlyElement = document.getElementById('realistic-yearly');
+
+            if (realisticMonthlyElement && realisticYearlyElement) {
+                if (animate) {
+                    const currentMonthly = parseFloat(realisticMonthlyElement.textContent.replace(/\./g, '')) || 0;
+                    const currentYearly = parseFloat(realisticYearlyElement.textContent.replace(/\./g, '')) || 0;
+                    animateValue(realisticMonthlyElement, currentMonthly, monthlyPacht, 1200);
+                    animateValue(realisticYearlyElement, currentYearly, yearlyPacht, 1200);
+                } else {
+                    realisticMonthlyElement.textContent = formatNumber(monthlyPacht);
+                    realisticYearlyElement.textContent = formatNumber(yearlyPacht);
+                }
+            }
+
+            // Die anderen beiden Szenarien (100.000€ und 1.000.000€) bleiben unverändert
+            // Sie sind fest codiert in HTML und werden nicht durch JavaScript aktualisiert
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup slider
+            const slider = document.getElementById('investment-slider');
+            const input = document.getElementById('investment-input');
+
+            // Event listeners
+            slider.addEventListener('input', () => {
+                input.value = slider.value;
+                updateCalculations(true);
+            });
+
+            // Input field event listener
+            input.addEventListener('input', () => {
+                const value = parseFloat(input.value);
+                if (value >= 25000 && value <= 1000000) {
+                    slider.value = value;
+                    updateCalculations(true);
+                }
+            });
+
+            // Initial calculation with animation
+            setTimeout(() => {
+                updateCalculations(true);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

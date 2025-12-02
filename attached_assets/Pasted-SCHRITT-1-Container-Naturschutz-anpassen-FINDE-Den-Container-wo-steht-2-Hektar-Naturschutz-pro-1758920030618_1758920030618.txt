@@ -1,0 +1,63 @@
+SCHRITT 1: Container "Naturschutz" anpassen
+
+FINDE: Den Container wo steht "2 Hektar Naturschutz pro 1 Hektar Anbaufläche"
+ÄNDERE ZU: "2 Hektar Naturschutz pro 1 Hektar Bio-Anbaufläche"
+PRÜFE: Ist diese Änderung vollständig umgesetzt? ✓
+
+SCHRITT 2: Impact-Berechnung neu strukturieren
+
+FINDE: Den Text "Berechne deinen Impact für Tier und Natur und Mensch"
+ÄNDERE ZU:
+
+Zeile 1: "Berechne deinen Impact"
+Zeile 2: "für Tier, Natur und Mensch"
+Zeile 3: "Bio-Liegenschaften mit Pachteinnahmen" (in dicker Schrift)
+Untertitel: "Ethisch. Wirtschaftlich. Rechtssicher."
+
+
+PRÜFE: Sind alle 4 Textteile korrekt implementiert? ✓
+
+SCHRITT 3: Bio-Container aktualisieren
+
+FINDE: "100% Bio-zertifizierte Produktion"
+ÄNDERE ZU: "100% zertifizierte Produktion von gesunden Nahrungsmitteln"
+PRÜFE: Wurde "Bio" entfernt und "von gesunden Nahrungsmitteln" hinzugefügt? ✓
+
+SCHRITT 4: CO2-Container erweitern
+
+FINDE: "CO2 dauerhaft gebunden"
+ÄNDERE ZU: "CO2 dauerhaft gebunden + saubere Luft"
+PRÜFE: Wurde "+ saubere Luft" hinzugefügt? ✓
+
+SCHRITT 5: Bio-Zitronen Text ändern
+
+FINDE: "Bio-Zitronen pro Jahr"
+ÄNDERE ZU: "Gesunde Bio-Nahrungsmittel pro Jahr nach entsprechendem Zeitraum"
+PRÜFE: Ist der neue Text vollständig implementiert? ✓
+
+SCHRITT 6: Pachtszenarien-Überschrift ändern
+
+FINDE: "Mögliche Pachtszenarien"
+ÄNDERE ZU: "Mögliche Pacht-Beispiele"
+PRÜFE: Wurde die Überschrift geändert? ✓
+
+SCHRITT 7: Pachteinnahmen-Anzeige umstrukturieren
+
+FINDE: Die Zahl "100.000" im mittleren Kasten
+VERSCHIEBE: Diese Zahl nach oben (wo vorher "Dein Start" stand)
+FINDE: Den Text "Dein Start"
+ÄNDERE ZU: "Vereinbarte jährliche Pachteinnahmen"
+POSITIONIERE: Die Zahl "100.000" direkt unter "Vereinbarte jährliche Pachteinnahmen"
+PRÜFE: Ist die Zahl jetzt oben und der neue Text implementiert? ✓
+
+SCHRITT 8: Impact-Zeitsektion komplett entfernen
+
+FINDE: Die gesamte Sektion "Dein Impact über die Zeit"
+LÖSCHE: Die komplette Sektion inklusive:
+
+Die Überschrift "Dein Impact über die Zeit"
+Die Zeitskala
+Alle zugehörigen Elemente dieser Sektion
+
+
+PRÜFE: Wurde die gesamte Sektion entfernt? ✓
